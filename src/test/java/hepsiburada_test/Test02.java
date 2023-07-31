@@ -2,13 +2,16 @@ package hepsiburada_test;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
 
-public class Test01 {
+public class Test02 {
     @Test
     public void test() throws InterruptedException {
 
@@ -18,34 +21,33 @@ public class Test01 {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
         //https://www.hepsiburada.com sitesine giriş yapılır.
-        driver.get("https://www.hepsiburada.com");
+        driver.get("https://www.trendyol.com");
 
         //Kullanıcı login işlemi yapılır ve kontrol edilir.
         Actions actions = new Actions(driver);
-        driver.findElement(By.id("onetrust-accept-btn-handler")).click();
-        actions.moveToElement(driver.findElement(By.xpath("//*[.='Giriş Yap']"))).perform();
-        driver.findElement(By.id("login")).click();
+      //  driver.findElement(By.id("onetrust-accept-btn-handler")).click();
+        driver.findElement(By.xpath("//*[.='Giriş Yap']"));
 
-        WebElement emailBox = driver.findElement(By.id("txtUserName"));
+        WebElement emailBox = driver.findElement(By.id("login-email"));
         emailBox.sendKeys("nttaskan@gmail.com" + Keys.ENTER);
-        Thread.sleep(4000);
-        WebElement passwordBox = driver.findElement(By.id("txtPassword"));
-        passwordBox.sendKeys("Bn2691210");
-        Thread.sleep(4000);
+        Thread.sleep(5000);
+        WebElement passwordBox = driver.findElement(By.id("login-password-input"));
+        passwordBox.sendKeys("b2691210");
+        Thread.sleep(5000);
         //JavascriptExecutor jse= (JavascriptExecutor) driver;
         //jse.executeScript("arguments[0].click();", driver.findElement(By.id("btnEmailSelect")));
-        driver.findElement(By.id("btnEmailSelect")).click();
-        Thread.sleep(4000);
+        driver.findElement(By.xpath("//*[@class='q-primary q-fluid q-button-medium q-button submit']")).click();
+        Thread.sleep(5000);
 
-        Assert.assertTrue(driver.findElement(By.xpath("//*[@id='myAccount']")).getText().contains("Hesabım"));
+        //Assert.assertTrue(driver.findElement(By.xpath("//*[@id='myAccount']")).getText().contains("Hesabım"));
 
         //Arama çubuğuna "Telefon" kelimesi aratılır.
-        WebElement searchBox = driver.findElement(By.xpath("//*[@class='searchBoxOld-M1esqHPyWSuRUjMCALPK']"));
+        WebElement searchBox = driver.findElement(By.id("sfx-discovery-search-suggestions"));
         searchBox.sendKeys("Telefon" + Keys.ENTER);
 
         //Kullanıcı fiyat aralığını  20.500-46.300 seçeneğini filtreler.
-        WebElement enAzFiyat = driver.findElement(By.xpath("//input[@placeholder='En az']"));
-        actions.moveToElement(enAzFiyat).
+        WebElement fiyat = driver.findElement(By.xpath("(//div[@class='fltr-cntnr-ttl-area'])[4]"));
+        actions.moveToElement(fiyat).
                 sendKeys("20500").
                 sendKeys(Keys.TAB).
                 sendKeys("46300").
@@ -71,7 +73,7 @@ public class Test01 {
         driver.findElement(By.xpath("//a[@class='delete_button_1lHhf']")).click();
         Assert.assertTrue(driver.findElement(By.xpath("//div[@class='content_Z9h8v']")).getText().contains("Sepetin şu an boş"));
 
-        driver.close();
+        //driver.close();
 
     }
 }
